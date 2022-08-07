@@ -1,13 +1,15 @@
+import os
+
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
-from whatsapp.client import Bot
+from whatsapp.client import Client
 
 
 class User:
 
-    def __init__(self, bot: Bot) -> None:
+    def __init__(self, bot: Client) -> None:
         super().__init__()
         self.bot = bot
         self.driver = bot.driver
@@ -86,8 +88,3 @@ class User:
 
         WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, "span[data-testid='checkmark']"))).click()
-
-
-
-
-

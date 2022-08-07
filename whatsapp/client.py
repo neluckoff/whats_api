@@ -16,7 +16,7 @@ from selenium.common.exceptions import TimeoutException
 from urllib.parse import quote
 
 
-class Bot:
+class Client:
 
     def __init__(self):
         self.options = webdriver.ChromeOptions()
@@ -87,3 +87,20 @@ class Bot:
         submit.click()
         time.sleep(1)
 
+    def send_image(self):
+        phone = '79266715863'
+        message = 'test'
+
+        self.driver.get(f'https://web.whatsapp.com/send?phone={phone}&text={quote(message)}')
+
+        WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "span[data-testid='clip']"))).click()
+
+        add_image = WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(
+                                (By.CSS_SELECTOR, "input[accept='image/*,video/mp4,video/3gpp,video/quicktime']")))
+        add_image.send_keys('C:\\Users\\neluc\\Desktop\\img.png')
+
+        submit = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "button[data-testid='compose-btn-send']")))
+        submit.click()
+        time.sleep(1)
