@@ -33,7 +33,7 @@ class Client:
                                   "Firefox/84.0")
         self.options.add_argument("--user-data-dir=C:\\Users\\neluc\\AppData\\Local\\Google\\Chrome\\User "
                                   "Data\\Default".format(getpass.getuser()))
-        # self.options.headless = True
+        self.options.headless = True  # makes the browser invisible
 
     def __login(self):
         self.driver.get('https://web.whatsapp.com')
@@ -82,24 +82,6 @@ class Client:
         phone = self.__check_phone_number(phone_number)
 
         self.driver.get(f'https://web.whatsapp.com/send?phone={phone}&text={quote(message)}')
-        submit = WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "button[data-testid='compose-btn-send']")))
-        submit.click()
-        time.sleep(1)
-
-    def send_image(self):
-        phone = '79266715863'
-        message = 'test'
-
-        self.driver.get(f'https://web.whatsapp.com/send?phone={phone}&text={quote(message)}')
-
-        WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(
-            (By.CSS_SELECTOR, "span[data-testid='clip']"))).click()
-
-        add_image = WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(
-                                (By.CSS_SELECTOR, "input[accept='image/*,video/mp4,video/3gpp,video/quicktime']")))
-        add_image.send_keys('C:\\Users\\neluc\\Desktop\\img.png')
-
         submit = WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, "button[data-testid='compose-btn-send']")))
         submit.click()
