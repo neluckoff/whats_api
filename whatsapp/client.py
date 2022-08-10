@@ -59,7 +59,7 @@ class Client:
                 os.remove('qr.png')
                 print('Authorization was successful')
             except TimeoutException:
-                print('Время авторизации истекло')
+                print('Authorization timed out')
                 img.close()
                 os.remove('qr.png')
                 self.driver.close()
