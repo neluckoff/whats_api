@@ -40,8 +40,8 @@ class Client:
 
         self.__set_options()
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
-        pickle.dump(self.driver.get_cookies(), open("../cookies", "wb"))
-        self.cookies = pickle.load(open("../cookies", "rb"))
+        pickle.dump(self.driver.get_cookies(), open("cookies", "wb"))
+        self.cookies = pickle.load(open("cookies", "rb"))
 
         self.__login(expectation)
 
@@ -79,7 +79,7 @@ class Client:
             try:
                 WebDriverWait(self.driver, 120).until(
                     EC.visibility_of_element_located((By.CSS_SELECTOR, "span[data-testid='default-user']")))
-                pickle.dump(self.driver.get_cookies(), open("../cookies", "wb"))
+                pickle.dump(self.driver.get_cookies(), open("cookies", "wb"))
                 img.close()
                 os.remove('qr.png')
                 print('Authorization was successful')
