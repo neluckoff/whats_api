@@ -18,7 +18,7 @@ from urllib.parse import quote
 
 class Client:
 
-    def __init__(self, user_dir: str = None) -> None:
+    def __init__(self, user_dir: str = None, expectation: int = 10) -> None:
         """
         WhatsApp account class
 
@@ -26,20 +26,24 @@ class Client:
             user_dir (str): the path to your Google profile on your computer
             (necessary in order to permanently not log in)
 
-            Path Example: C:\\Users\\user\\AppData\\Local\\Google\\Chrome\\User Data\\Default
+            Path Example for Windows:
+            C:\\Users\\user\\AppData\\Local\\Google\\Chrome\\User Data\\Default
+
+            expectation (int): the waiting time for the WhatsApp page to load,
+            if the computer is weak - put more
         """
         self.options = webdriver.ChromeOptions()
-        self.__set_options()
 
         if user_dir is not None:
             path = f"--user-data-dir={user_dir}"
             self.options.add_argument(path.format(getpass.getuser()))
 
+        self.__set_options()
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
         pickle.dump(self.driver.get_cookies(), open("../cookies", "wb"))
         self.cookies = pickle.load(open("../cookies", "rb"))
 
-        self.__login()
+        self.__login(expectation)
 
     def __set_options(self) -> None:
         """
@@ -50,9 +54,12 @@ class Client:
                                   "Firefox/84.0")
         self.options.headless = True  # makes the browser invisible
 
-    def __login(self) -> None:
+    def __login(self, expectation: int) -> None:
         """
         Method for authorization in WhatsApp
+
+        :param:
+            expectation (int): the waiting time for the WhatsApp page to load
         """
         self.driver.get('https://web.whatsapp.com')
 
@@ -60,7 +67,7 @@ class Client:
             self.driver.add_cookie(i)
 
         try:
-            value = WebDriverWait(self.driver, 10).until(
+            value = WebDriverWait(self.driver, expectation).until(
                 EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-testid='qrcode']")))
             value = value.get_attribute('data-ref')
 
