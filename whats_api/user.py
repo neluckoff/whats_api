@@ -4,18 +4,27 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
-from whatsapp.client import Client
+from whats_api.client import Client
 
 
 class User:
 
     def __init__(self, bot: Client) -> None:
+        """
+        Class for working with your account profile
+
+        :param:
+            bot (Client): main class instance
+        """
         super().__init__()
         self.bot = bot
         self.driver = bot.driver
         self.account_info = self.__get_info()
 
     def logout(self) -> None:
+        """
+        Method for logging out of your account
+        """
         self.driver.get('https://web.whatsapp.com')
 
         WebDriverWait(self.driver, 5).until(
@@ -31,14 +40,32 @@ class User:
         self.driver.quit()
 
     def get_name(self) -> str:
+        """
+        Method for getting account name
+
+        :return:
+            str: name
+        """
         name = self.account_info[0]
         return name
 
     def get_status(self) -> str:
+        """
+        Method for getting account description
+
+        :return:
+            str: description
+        """
         status = self.account_info[1]
         return status
 
     def __get_info(self) -> list:
+        """
+        Private method to get basic account information
+
+        :return:
+            list: account information
+        """
         self.driver.get('https://web.whatsapp.com')
 
         WebDriverWait(self.driver, 5).until(
@@ -53,6 +80,12 @@ class User:
         return info
 
     def __get_edit_buttons(self) -> list:
+        """
+        Private method to get all buttons for changing profile information
+
+        :return:
+            list: edit buttons
+        """
         WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, "span[data-testid='default-user']"))).click()
 
@@ -62,6 +95,12 @@ class User:
         return buttons
 
     def set_name(self, name: str) -> None:
+        """
+        Method for changing the name on your account
+
+        :param:
+            name (str): new account name
+        """
         self.driver.get('https://web.whatsapp.com')
 
         edit = self.__get_edit_buttons()[0]
@@ -76,6 +115,12 @@ class User:
             EC.visibility_of_element_located((By.CSS_SELECTOR, "span[data-testid='checkmark']"))).click()
 
     def set_status(self, status: str) -> None:
+        """
+        Method for changing the status on your account
+
+        :param:
+            status (str): new account status
+        """
         self.driver.get('https://web.whatsapp.com')
 
         edit = self.__get_edit_buttons()[1]

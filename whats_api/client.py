@@ -18,24 +18,42 @@ from urllib.parse import quote
 
 class Client:
 
-    def __init__(self):
+    def __init__(self, user_dir: str = None) -> None:
+        """
+        WhatsApp account class
+
+        :param:
+            user_dir (str): the path to your Google profile on your computer
+            (necessary in order to permanently not log in)
+
+            Path Example: C:\\Users\\user\\AppData\\Local\\Google\\Chrome\\User Data\\Default
+        """
         self.options = webdriver.ChromeOptions()
         self.__set_options()
+
+        if user_dir is not None:
+            path = f"--user-data-dir={user_dir}"
+            self.options.add_argument(path.format(getpass.getuser()))
+
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
         pickle.dump(self.driver.get_cookies(), open("../cookies", "wb"))
         self.cookies = pickle.load(open("../cookies", "rb"))
 
         self.__login()
 
-    def __set_options(self):
+    def __set_options(self) -> None:
+        """
+        Applying browser settings
+        """
         self.options.add_argument("--disable-blink-features=AutomationControlled")
         self.options.add_argument("user-agent=Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 "
                                   "Firefox/84.0")
-        self.options.add_argument("--user-data-dir=C:\\Users\\neluc\\AppData\\Local\\Google\\Chrome\\User "
-                                  "Data\\Default".format(getpass.getuser()))
         self.options.headless = True  # makes the browser invisible
 
-    def __login(self):
+    def __login(self) -> None:
+        """
+        Method for authorization in WhatsApp
+        """
         self.driver.get('https://web.whatsapp.com')
 
         for i in self.cookies:
@@ -69,16 +87,29 @@ class Client:
             print('User is authorized, authorization is not required')
 
     def __check_phone_number(self, phone: str) -> str:
+        """
+        Method to validate entered phone number
+
+        :param:
+            phone (str): phone number
+
+        :return:
+            str: changed phone number
+        """
         result = [abs(int(s)) for s in re.findall(r'-?\d+\.?\d*', phone)]
         text = ''
         for i in result:
             text += str(i)
         return text
 
-    def __get_driver(self):
-        return self.driver
-
     def message_send(self, phone_number: str, message: str) -> None:
+        """
+        Method for sending a regular message to a phone number
+
+        :param:
+            phone_number (str): phone number
+            message (str): text message
+        """
         phone = self.__check_phone_number(phone_number)
 
         self.driver.get(f'https://web.whatsapp.com/send?phone={phone}&text={quote(message)}')
