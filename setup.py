@@ -25,7 +25,7 @@ setup(
     license='MIT License, see LICENSE file',
 
     packages=['whats_api'],
-    install_requires=['selenium', 'qrcode', 'Pillow'],
+    install_requires=['selenium', 'qrcode', 'Pillow', 'webdriver-manager'],
 
     classifiers=[
         'License :: OSI Approved :: MIT License',
