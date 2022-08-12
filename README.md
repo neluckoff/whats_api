@@ -5,10 +5,10 @@
 &nbsp;
 
 <div align="center">
-    <a href="https://github.com/neluckoff/social_spam/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/neluckoff/social_spam?style=flat-square"></a>
-    <a href="https://github.com/neluckoff/social_spam/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/neluckoff/social_spam?style=flat-square"></a>
-    <a href="https://github.com/neluckoff/social_spam"><img alt="GitHub license" src="https://img.shields.io/github/license/neluckoff/social_spam?style=flat-square"></a>
-    <a href="https://github.com/neluckoff/social_spam/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/neluckoff/social_spam?style=flat-square"></a>
+    <a href="https://github.com/neluckoff/whats_api/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/neluckoff/whats_api"></a>
+    <a href="https://github.com/neluckoff/whats_api/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/neluckoff/whats_api"></a>
+    <a href="https://github.com/neluckoff/whats_api/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/neluckoff/whats_api"></a>
+    <a href="https://github.com/neluckoff/whats_api/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/neluckoff/whats_api"></a>
 </div>
 
 ## Installation
