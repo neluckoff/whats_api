@@ -9,5 +9,5 @@ from .client import Client
 
 
 __author__ = 'neluckoff'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __email__ = 'neluckoff@gmail.com'
